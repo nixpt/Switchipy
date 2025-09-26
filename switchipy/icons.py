@@ -430,7 +430,7 @@ def get_icon_info(icon_path):
 
 def create_icon(mode: str):
     """
-    Create emoji-style sun and moon icons.
+    Create properly sized and shaped icons for system tray.
     
     Args:
         mode (str): "light" or "dark" - determines which icon to show
@@ -443,53 +443,39 @@ def create_icon(mode: str):
     dc = ImageDraw.Draw(image)
     
     if mode == "light":
-        # 🌞 Sun emoji style - bright yellow with face
+        # Sun - properly sized and centered
         center_x, center_y = 32, 32
-        sun_radius = 22
+        sun_radius = 18  # Smaller radius for better proportions
         
-        # Draw sun rays (12 rays like emoji)
-        for angle in range(0, 360, 30):
+        # Draw sun rays (8 rays, not too long)
+        for angle in range(0, 360, 45):
             import math
             rad = math.radians(angle)
-            ray_length = 28
+            ray_length = 22  # Shorter rays
             end_x = center_x + ray_length * math.cos(rad)
             end_y = center_y + ray_length * math.sin(rad)
-            dc.line([(center_x, center_y), (end_x, end_y)], fill="#FFD700", width=4)
+            dc.line([(center_x, center_y), (end_x, end_y)], fill="#FFD700", width=3)
         
-        # Draw sun circle (bright yellow)
+        # Draw sun circle
         dc.ellipse((center_x - sun_radius, center_y - sun_radius, 
                    center_x + sun_radius, center_y + sun_radius), 
-                   fill="#FFD700", outline="#FFA500", width=2)
-        
-        # Draw sun face (like emoji)
-        # Eyes
-        dc.ellipse((center_x - 6, center_y - 4, center_x - 2, center_y), fill="#000000")
-        dc.ellipse((center_x + 2, center_y - 4, center_x + 6, center_y), fill="#000000")
-        # Smile
-        dc.arc((center_x - 8, center_y - 2, center_x + 8, center_y + 6), 0, 180, fill="#000000", width=2)
+                   fill="#FFD700", outline="#000000", width=2)
         
     else:
-        # 🌙 Moon emoji style - white/yellow with face
+        # Moon - properly sized and centered
         center_x, center_y = 32, 32
-        moon_radius = 22
+        moon_radius = 18  # Same size as sun for consistency
         
-        # Draw moon crescent (like emoji)
+        # Draw moon circle
         dc.ellipse((center_x - moon_radius, center_y - moon_radius, 
                    center_x + moon_radius, center_y + moon_radius), 
-                   fill="#F0F0F0", outline="#C0C0C0", width=2)
+                   fill="#FFFFFF", outline="#000000", width=2)
         
-        # Create crescent effect (like emoji moon)
-        crescent_offset = 10
+        # Create crescent effect
+        crescent_offset = 6  # Smaller offset for better proportions
         dc.ellipse((center_x - moon_radius + crescent_offset, center_y - moon_radius, 
                    center_x + moon_radius + crescent_offset, center_y + moon_radius), 
-                   fill=(0, 0, 0, 0), outline="#C0C0C0", width=2)
-        
-        # Draw moon face (like emoji)
-        # Eyes
-        dc.ellipse((center_x - 6, center_y - 4, center_x - 2, center_y), fill="#000000")
-        dc.ellipse((center_x + 2, center_y - 4, center_x + 6, center_y), fill="#000000")
-        # Smile
-        dc.arc((center_x - 8, center_y - 2, center_x + 8, center_y + 6), 0, 180, fill="#000000", width=2)
+                   fill=(0, 0, 0, 0), outline="#000000", width=2)
 
     image.save(ICON_PATH)
     return ICON_PATH

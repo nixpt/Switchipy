@@ -10,10 +10,10 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Import all test modules
-from test_themes import TestThemes
-from test_config import TestConfig
-from test_icons import TestIcons
-from test_hotkey import TestHotkey
+from tests.test_themes import TestThemes
+from tests.test_config import TestConfig
+from tests.test_icons import TestIcons
+from tests.test_hotkey import TestHotkey
 
 def run_tests():
     """Run all tests"""

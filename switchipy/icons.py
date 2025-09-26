@@ -23,6 +23,9 @@ ICON_CONFIG = {
     'fallback_icon': '/usr/share/pixmaps/switchipy.png'
 }
 
+# Legacy constant for backward compatibility
+ICON_PATH = "/tmp/switchipy_icon.png"
+
 # Icon themes and styles
 ICON_THEMES = {
     'default': {
@@ -374,7 +377,7 @@ def update_icon(indicator, mode, theme='default', animated=False):
             icon_path = frame_paths[0] if frame_paths else create_icon_with_fallback(mode, theme)
         else:
             # Create static icon
-            icon_path = create_icon_with_fallback(mode, theme, theme)
+            icon_path = create_icon_with_fallback(mode, theme)
         
         # Update the system tray icon using GTK's idle_add for thread safety
         GLib.idle_add(indicator.set_icon, icon_path)

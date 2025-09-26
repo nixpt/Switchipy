@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Name=Switchipy
+Comment=XFCE Theme Switcher
+Exec=switchipy
+Icon=switchipy
+Terminal=false
+NoDisplay=false
+Hidden=false
+X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=10
+StartupNotify=false
+Categories=System;Settings;
+Keywords=theme;dark;light;xfce;switcher;

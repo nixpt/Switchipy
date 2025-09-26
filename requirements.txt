@@ -1,0 +1,11 @@
+# Core dependencies
+PyGObject>=3.40.0
+Pillow>=8.0.0
+
+# Optional dependencies
+pynput>=1.7.6  # For hotkey support
+
+# Development dependencies (optional)
+# pytest>=6.0.0
+# flake8>=3.8.0
+# black>=21.0.0

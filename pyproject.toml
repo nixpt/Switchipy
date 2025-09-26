@@ -1,0 +1,96 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "switchipy"
+version = "1.0.0"
+description = "XFCE Theme Switcher with automatic time-based switching"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Prabin Thapa", email = "praabinn@protonmail.com"}
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Desktop Environment :: Window Managers",
+    "Topic :: System :: Systems Administration",
+]
+keywords = ["xfce", "theme", "switcher", "dark", "light", "automatic"]
+requires-python = ">=3.6"
+dependencies = [
+    "pynput>=1.7.0",
+    "Pillow>=8.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov>=2.0",
+    "flake8>=3.8",
+    "black>=21.0",
+]
+
+[project.scripts]
+switchipy = "app:main"
+switchipy-cli = "switchipy_cli:main"
+
+[project.urls]
+Homepage = "https://github.com/username/switchipy"
+Documentation = "https://github.com/username/switchipy/docs"
+Repository = "https://github.com/username/switchipy"
+"Bug Tracker" = "https://github.com/username/switchipy/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["switchipy*"]
+
+[tool.setuptools.package-data]
+switchipy = ["*.md", "*.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.black]
+line-length = 88
+target-version = ['py36']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    "*.egg-info",
+]

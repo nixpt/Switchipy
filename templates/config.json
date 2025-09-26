@@ -1,0 +1,16 @@
+{
+  "auto_switch_enabled": true,
+  "dark_start": "19:00",
+  "dark_end": "05:00",
+  "hotkey": "<ctrl>+<alt>+t",
+  "last_theme": "",
+  "theme_preferences": {
+    "light_theme": "Adwaita",
+    "dark_theme": "Adwaita-dark"
+  },
+  "advanced": {
+    "check_interval": 60,
+    "fade_transition": false,
+    "notifications": true
+  }
+}

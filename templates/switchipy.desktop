@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Switchipy
+Comment=XFCE Theme Switcher
+Exec=switchipy
+Icon=switchipy
+Terminal=false
+Type=Application
+Categories=System;Settings;
+StartupNotify=true
+Keywords=theme;dark;light;xfce;switcher;

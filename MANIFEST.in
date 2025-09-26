@@ -1,0 +1,16 @@
+include README.md
+include LICENSE
+include VERSION
+include CHANGELOG.md
+include requirements.txt
+include Makefile
+include .gitignore
+recursive-include examples *
+recursive-include templates *
+recursive-include docs *
+recursive-include scripts *
+recursive-include tests *
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude * *.so
+recursive-exclude * .DS_Store

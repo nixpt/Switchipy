@@ -231,3 +231,4 @@ For issues and questions:
 - Check the [documentation](docs/)
 - Run `switchipy-cli --help` for CLI usage
 - Check system dependencies with `which xfconf-query zenity`
+# Trigger workflow

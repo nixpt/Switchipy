@@ -17,8 +17,6 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: POSIX :: Linux",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -28,10 +26,11 @@ classifiers = [
     "Topic :: System :: Systems Administration",
 ]
 keywords = ["xfce", "theme", "switcher", "dark", "light", "automatic"]
-requires-python = ">=3.6"
+requires-python = ">=3.8"
 dependencies = [
     "pynput>=1.7.0",
     "Pillow>=8.0.0",
+    "PyGObject>=3.40.0",
 ]
 
 [project.optional-dependencies]
@@ -40,17 +39,18 @@ dev = [
     "pytest-cov>=2.0",
     "flake8>=3.8",
     "black>=21.0",
+    "build>=0.8.0",
 ]
 
 [project.scripts]
-switchipy = "app:main"
+switchipy = "switchipy.cli:main"
 switchipy-cli = "switchipy_cli:main"
 
 [project.urls]
-Homepage = "https://github.com/username/switchipy"
-Documentation = "https://github.com/username/switchipy/docs"
-Repository = "https://github.com/username/switchipy"
-"Bug Tracker" = "https://github.com/username/switchipy/issues"
+Homepage = "https://github.com/nixpt/switchipy"
+Documentation = "https://github.com/nixpt/switchipy/docs"
+Repository = "https://github.com/nixpt/switchipy"
+"Bug Tracker" = "https://github.com/nixpt/switchipy/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
@@ -68,7 +68,7 @@ addopts = "-v --tb=short"
 
 [tool.black]
 line-length = 88
-target-version = ['py36']
+target-version = ['py38']
 include = '\.pyi?$'
 extend-exclude = '''
 /(

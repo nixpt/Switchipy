@@ -427,14 +427,29 @@ def get_icon_info(icon_path):
         return {'error': str(e)}
 
 # Legacy function for backward compatibility
-def create_icon(mode):
+
+def create_icon(mode: str):
     """
-    Legacy function for backward compatibility.
+    Create a simple, high-contrast icon for the system tray.
     
     Args:
-        mode (str): "light" or "dark"
+        mode (str): "light" or "dark" - determines icon appearance
         
     Returns:
         str: Path to the created icon file
     """
-    return create_icon_with_fallback(mode, 'default')
+    size = 64
+    image = Image.new("RGBA", (size, size), (0,0,0,0))
+    dc = ImageDraw.Draw(image)
+    outline_color = "#303030"
+    
+    if mode == "light":
+        # Bold, high-contrast sun
+        dc.ellipse((8, 8, 56, 56), fill="#FFD700", outline=outline_color, width=3)
+    else:
+        # Bold, high-contrast moon
+        dc.ellipse((8, 8, 56, 56), fill="#FFFFFF", outline=outline_color, width=3)
+        dc.ellipse((18, 8, 66, 56), fill="#181818") # Cutout for crescent
+
+    image.save(ICON_PATH)
+    return ICON_PATH

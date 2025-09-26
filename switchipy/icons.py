@@ -430,7 +430,7 @@ def get_icon_info(icon_path):
 
 def create_icon(mode: str):
     """
-    Create sun or moon icon based on theme mode.
+    Create emoji-style sun and moon icons.
     
     Args:
         mode (str): "light" or "dark" - determines which icon to show
@@ -441,44 +441,55 @@ def create_icon(mode: str):
     size = 64
     image = Image.new("RGBA", (size, size), (0,0,0,0))
     dc = ImageDraw.Draw(image)
-    outline_color = "#303030"
     
     if mode == "light":
-        # Show SUN icon for light theme
-        # Draw sun with rays
+        # 🌞 Sun emoji style - bright yellow with face
         center_x, center_y = 32, 32
-        sun_radius = 20
+        sun_radius = 22
         
-        # Draw sun rays (8 rays)
-        for angle in range(0, 360, 45):
+        # Draw sun rays (12 rays like emoji)
+        for angle in range(0, 360, 30):
             import math
             rad = math.radians(angle)
-            ray_length = 25
+            ray_length = 28
             end_x = center_x + ray_length * math.cos(rad)
             end_y = center_y + ray_length * math.sin(rad)
-            dc.line([(center_x, center_y), (end_x, end_y)], fill="#FFD700", width=3)
+            dc.line([(center_x, center_y), (end_x, end_y)], fill="#FFD700", width=4)
         
-        # Draw sun circle
+        # Draw sun circle (bright yellow)
         dc.ellipse((center_x - sun_radius, center_y - sun_radius, 
                    center_x + sun_radius, center_y + sun_radius), 
-                   fill="#FFD700", outline=outline_color, width=2)
+                   fill="#FFD700", outline="#FFA500", width=2)
+        
+        # Draw sun face (like emoji)
+        # Eyes
+        dc.ellipse((center_x - 6, center_y - 4, center_x - 2, center_y), fill="#000000")
+        dc.ellipse((center_x + 2, center_y - 4, center_x + 6, center_y), fill="#000000")
+        # Smile
+        dc.arc((center_x - 8, center_y - 2, center_x + 8, center_y + 6), 0, 180, fill="#000000", width=2)
         
     else:
-        # Show MOON icon for dark theme
-        # Draw moon crescent
+        # 🌙 Moon emoji style - white/yellow with face
         center_x, center_y = 32, 32
-        moon_radius = 20
+        moon_radius = 22
         
-        # Draw main moon circle
+        # Draw moon crescent (like emoji)
         dc.ellipse((center_x - moon_radius, center_y - moon_radius, 
                    center_x + moon_radius, center_y + moon_radius), 
-                   fill="#E6E6FA", outline=outline_color, width=2)
+                   fill="#F0F0F0", outline="#C0C0C0", width=2)
         
-        # Create crescent effect
-        crescent_offset = 8
+        # Create crescent effect (like emoji moon)
+        crescent_offset = 10
         dc.ellipse((center_x - moon_radius + crescent_offset, center_y - moon_radius, 
                    center_x + moon_radius + crescent_offset, center_y + moon_radius), 
-                   fill=(0, 0, 0, 0), outline=outline_color, width=2)
+                   fill=(0, 0, 0, 0), outline="#C0C0C0", width=2)
+        
+        # Draw moon face (like emoji)
+        # Eyes
+        dc.ellipse((center_x - 6, center_y - 4, center_x - 2, center_y), fill="#000000")
+        dc.ellipse((center_x + 2, center_y - 4, center_x + 6, center_y), fill="#000000")
+        # Smile
+        dc.arc((center_x - 8, center_y - 2, center_x + 8, center_y + 6), 0, 180, fill="#000000", width=2)
 
     image.save(ICON_PATH)
     return ICON_PATH

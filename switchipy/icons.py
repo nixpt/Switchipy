@@ -430,52 +430,48 @@ def get_icon_info(icon_path):
 
 def create_icon(mode: str):
     """
-    Create properly sized and shaped icons for system tray.
+    Create simple emoji-based icons like the original bash script.
     
     Args:
-        mode (str): "light" or "dark" - determines which icon to show
+        mode (str): "light" or "dark" - determines which emoji to use
         
     Returns:
         str: Path to the created icon file
     """
-    size = 64
-    image = Image.new("RGBA", (size, size), (0,0,0,0))
-    dc = ImageDraw.Draw(image)
+    import os
     
     if mode == "light":
-        # Sun - properly sized and centered
-        center_x, center_y = 32, 32
-        sun_radius = 18  # Smaller radius for better proportions
-        
-        # Draw sun rays (8 rays, not too long)
-        for angle in range(0, 360, 45):
-            import math
-            rad = math.radians(angle)
-            ray_length = 22  # Shorter rays
-            end_x = center_x + ray_length * math.cos(rad)
-            end_y = center_y + ray_length * math.sin(rad)
-            dc.line([(center_x, center_y), (end_x, end_y)], fill="#FFD700", width=3)
-        
-        # Draw sun circle
-        dc.ellipse((center_x - sun_radius, center_y - sun_radius, 
-                   center_x + sun_radius, center_y + sun_radius), 
-                   fill="#FFD700", outline="#000000", width=2)
-        
+        # Use sun emoji for light mode
+        emoji = "🌞"
     else:
-        # Moon - properly sized and centered
-        center_x, center_y = 32, 32
-        moon_radius = 18  # Same size as sun for consistency
-        
-        # Draw moon circle
-        dc.ellipse((center_x - moon_radius, center_y - moon_radius, 
-                   center_x + moon_radius, center_y + moon_radius), 
-                   fill="#FFFFFF", outline="#000000", width=2)
-        
-        # Create crescent effect
-        crescent_offset = 6  # Smaller offset for better proportions
-        dc.ellipse((center_x - moon_radius + crescent_offset, center_y - moon_radius, 
-                   center_x + moon_radius + crescent_offset, center_y + moon_radius), 
-                   fill=(0, 0, 0, 0), outline="#000000", width=2)
-
-    image.save(ICON_PATH)
+        # Use moon emoji for dark mode  
+        emoji = "🌙"
+    
+    # Save emoji to cache file (like original bash script)
+    cache_file = os.path.expanduser("~/.cache/switch-icon.txt")
+    os.makedirs(os.path.dirname(cache_file), exist_ok=True)
+    
+    with open(cache_file, 'w') as f:
+        f.write(emoji)
+    
+    # Also save to the standard icon path for compatibility
+    with open(ICON_PATH, 'w') as f:
+        f.write(emoji)
+    
     return ICON_PATH
+
+def get_current_icon():
+    """
+    Get the current icon from cache file.
+    
+    Returns:
+        str: Current emoji icon
+    """
+    import os
+    cache_file = os.path.expanduser("~/.cache/switch-icon.txt")
+    
+    if os.path.exists(cache_file):
+        with open(cache_file, 'r') as f:
+            return f.read().strip()
+    else:
+        return "🌞"  # Default to sun

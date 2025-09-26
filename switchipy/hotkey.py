@@ -14,16 +14,16 @@ def register_hotkey(callback):
     """
     Register a global hotkey for theme switching.
     
-    This function sets up a global hotkey (Ctrl+Alt+T) that will call
+    This function sets up a global hotkey (Ctrl+Alt+S) that will call
     the provided callback function when pressed. The hotkey listener
     runs in a separate daemon thread to avoid blocking the main GTK loop.
     
     Args:
         callback (callable): Function to call when hotkey is pressed
     """
-    # Create global hotkey mapping
+    # Create global hotkey mapping - using Ctrl+Alt+S to avoid conflicts
     hotkey = keyboard.GlobalHotKeys({
-        '<ctrl>+<alt>+t': callback  # Ctrl+Alt+T combination
+        '<ctrl>+<alt>+s': callback  # Ctrl+Alt+S combination (Switch)
     })
     
     # Start the hotkey listener in a daemon thread

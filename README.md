@@ -85,7 +85,7 @@ switchipy
 
 Features:
 - Right-click system tray icon for menu
-- Toggle theme with hotkey (Ctrl+Alt+T)
+- Toggle theme with hotkey (Ctrl+Alt+S)
 - Auto-switch based on time
 - Theme selection from detected pairs
 

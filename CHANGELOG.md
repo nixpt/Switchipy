@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - System tray application for XFCE theme switching
 - Automatic theme detection for light/dark pairs
 - Time-based automatic theme switching
-- Global hotkey support (Ctrl+Alt+T)
+- Global hotkey support (Ctrl+Alt+S)
 - Command-line interface for scripting and automation
 - Persistent configuration with JSON storage
 - Comprehensive test suite

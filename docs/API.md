@@ -120,7 +120,7 @@ Registers a global hotkey for theme switching.
 **Parameters:**
 - `callback` (callable): Function to call when hotkey is pressed
 
-**Hotkey:** `Ctrl+Alt+T`
+**Hotkey:** `Ctrl+Alt+S`
 
 ### autoswitch.py
 

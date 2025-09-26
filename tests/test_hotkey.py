@@ -29,7 +29,7 @@ class TestHotkey(unittest.TestCase):
         
         # Verify GlobalHotKeys was called with correct hotkey
         mock_hotkeys.assert_called_once_with({
-            '<ctrl>+<alt>+t': self.test_callback
+            '<ctrl>+<alt>+s': self.test_callback
         })
         
         # Verify thread was started

@@ -6,7 +6,7 @@ A system tray application for switching between light and dark themes on XFCE.
 Features:
 - Theme switching with system tray integration
 - Auto-switch based on time of day
-- Global hotkey support (Ctrl+Alt+T)
+- Global hotkey support (Ctrl+Alt+S)
 - Configuration management
 - Theme detection and pairing
 
@@ -82,7 +82,7 @@ class SwitchipyApp:
         # Register global hotkey if pynput is available
         if HOTKEY_AVAILABLE:
             register_hotkey(self.toggle_theme)
-            print("[App] Hotkey registered: Ctrl+Alt+T")
+            print("[App] Hotkey registered: Ctrl+Alt+S")
         else:
             print("[App] Hotkey functionality disabled")
 
@@ -203,7 +203,7 @@ class SwitchipyApp:
 
         # Hotkey info (if available)
         if HOTKEY_AVAILABLE:
-            hotkey_item = Gtk.MenuItem(label="Hotkey: Ctrl+Alt+T")
+            hotkey_item = Gtk.MenuItem(label="Hotkey: Ctrl+Alt+S")
             hotkey_item.set_sensitive(False)  # Make it non-clickable (info only)
             menu.append(hotkey_item)
 

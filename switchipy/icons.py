@@ -430,10 +430,10 @@ def get_icon_info(icon_path):
 
 def create_icon(mode: str):
     """
-    Create simple, bold high-contrast icons for the system tray.
+    Create sun or moon icon based on theme mode.
     
     Args:
-        mode (str): "light" or "dark" - determines icon appearance
+        mode (str): "light" or "dark" - determines which icon to show
         
     Returns:
         str: Path to the created icon file
@@ -444,12 +444,41 @@ def create_icon(mode: str):
     outline_color = "#303030"
     
     if mode == "light":
-        # Bold, high-contrast sun
-        dc.ellipse((8, 8, 56, 56), fill="#FFD700", outline=outline_color, width=3)
+        # Show SUN icon for light theme
+        # Draw sun with rays
+        center_x, center_y = 32, 32
+        sun_radius = 20
+        
+        # Draw sun rays (8 rays)
+        for angle in range(0, 360, 45):
+            import math
+            rad = math.radians(angle)
+            ray_length = 25
+            end_x = center_x + ray_length * math.cos(rad)
+            end_y = center_y + ray_length * math.sin(rad)
+            dc.line([(center_x, center_y), (end_x, end_y)], fill="#FFD700", width=3)
+        
+        # Draw sun circle
+        dc.ellipse((center_x - sun_radius, center_y - sun_radius, 
+                   center_x + sun_radius, center_y + sun_radius), 
+                   fill="#FFD700", outline=outline_color, width=2)
+        
     else:
-        # Bold, high-contrast moon
-        dc.ellipse((8, 8, 56, 56), fill="#FFFFFF", outline=outline_color, width=3)
-        dc.ellipse((18, 8, 66, 56), fill="#181818")
+        # Show MOON icon for dark theme
+        # Draw moon crescent
+        center_x, center_y = 32, 32
+        moon_radius = 20
+        
+        # Draw main moon circle
+        dc.ellipse((center_x - moon_radius, center_y - moon_radius, 
+                   center_x + moon_radius, center_y + moon_radius), 
+                   fill="#E6E6FA", outline=outline_color, width=2)
+        
+        # Create crescent effect
+        crescent_offset = 8
+        dc.ellipse((center_x - moon_radius + crescent_offset, center_y - moon_radius, 
+                   center_x + moon_radius + crescent_offset, center_y + moon_radius), 
+                   fill=(0, 0, 0, 0), outline=outline_color, width=2)
 
     image.save(ICON_PATH)
     return ICON_PATH

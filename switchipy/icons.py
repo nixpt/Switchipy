@@ -430,7 +430,7 @@ def get_icon_info(icon_path):
 
 def create_icon(mode: str):
     """
-    Create a simple, high-contrast icon for the system tray.
+    Create enhanced high-contrast icons for the system tray.
     
     Args:
         mode (str): "light" or "dark" - determines icon appearance
@@ -441,15 +441,36 @@ def create_icon(mode: str):
     size = 64
     image = Image.new("RGBA", (size, size), (0,0,0,0))
     dc = ImageDraw.Draw(image)
-    outline_color = "#303030"
     
     if mode == "light":
-        # Bold, high-contrast sun
-        dc.ellipse((8, 8, 56, 56), fill="#FFD700", outline=outline_color, width=3)
+        # Enhanced sun with rays
+        sun_color = "#FFD700"
+        outline_color = "#B8860B"
+        
+        # Draw sun rays (8 rays)
+        center_x, center_y = 32, 32
+        ray_length = 20
+        for angle in range(0, 360, 45):
+            import math
+            rad = math.radians(angle)
+            end_x = center_x + ray_length * math.cos(rad)
+            end_y = center_y + ray_length * math.sin(rad)
+            dc.line([(center_x, center_y), (end_x, end_y)], fill=sun_color, width=3)
+        
+        # Draw sun circle
+        dc.ellipse((16, 16, 48, 48), fill=sun_color, outline=outline_color, width=2)
+        
     else:
-        # Bold, high-contrast moon
-        dc.ellipse((8, 8, 56, 56), fill="#FFFFFF", outline=outline_color, width=3)
-        dc.ellipse((18, 8, 66, 56), fill="#181818") # Cutout for crescent
+        # Enhanced moon with better crescent
+        moon_color = "#E6E6FA"
+        outline_color = "#C0C0C0"
+        
+        # Draw main moon circle
+        dc.ellipse((16, 16, 48, 48), fill=moon_color, outline=outline_color, width=2)
+        
+        # Create crescent effect with better positioning
+        crescent_x = 20
+        dc.ellipse((crescent_x, 16, crescent_x + 32, 48), fill=(0, 0, 0, 0), outline=outline_color, width=2)
 
     image.save(ICON_PATH)
     return ICON_PATH

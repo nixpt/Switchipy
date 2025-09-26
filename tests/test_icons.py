@@ -39,7 +39,7 @@ class TestIcons(unittest.TestCase):
         self.assertTrue(os.path.exists(result_path))
     
     @patch('switchipy.icons.GLib.idle_add')
-    @patch('switchipy.icons.create_icon_with_fallback')
+    @patch('switchipy.icons.create_icon')
     def test_update_icon(self, mock_create, mock_idle_add):
         """Test updating icon"""
         mock_indicator = MagicMock()
@@ -47,7 +47,7 @@ class TestIcons(unittest.TestCase):
         
         update_icon(mock_indicator, "light")
         
-        mock_create.assert_called_once_with("light", "default")
+        mock_create.assert_called_once_with("light")
         mock_idle_add.assert_called_once()
     
     def test_icon_path_constant(self):

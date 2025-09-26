@@ -430,48 +430,79 @@ def get_icon_info(icon_path):
 
 def create_icon(mode: str):
     """
-    Create simple emoji-based icons like the original bash script.
+    Create simple, clean icons for the system tray.
     
     Args:
-        mode (str): "light" or "dark" - determines which emoji to use
+        mode (str): "light" or "dark" - determines icon appearance
         
     Returns:
         str: Path to the created icon file
     """
-    import os
+    size = 64
+    image = Image.new("RGBA", (size, size), (0,0,0,0))
+    dc = ImageDraw.Draw(image)
+    outline_color = "#303030"
     
     if mode == "light":
-        # Use sun emoji for light mode
-        emoji = "🌞"
+        # Simple sun icon
+        center_x, center_y = 32, 32
+        sun_radius = 18
+        
+        # Draw sun rays (8 rays)
+        for angle in range(0, 360, 45):
+            import math
+            rad = math.radians(angle)
+            ray_length = 22
+            end_x = center_x + ray_length * math.cos(rad)
+            end_y = center_y + ray_length * math.sin(rad)
+            dc.line([(center_x, center_y), (end_x, end_y)], fill="#FFD700", width=3)
+        
+        # Draw sun circle
+        dc.ellipse((center_x - sun_radius, center_y - sun_radius, 
+                   center_x + sun_radius, center_y + sun_radius), 
+                   fill="#FFD700", outline=outline_color, width=2)
+        
     else:
-        # Use moon emoji for dark mode  
-        emoji = "🌙"
-    
-    # Save emoji to cache file (like original bash script)
-    cache_file = os.path.expanduser("~/.cache/switch-icon.txt")
-    os.makedirs(os.path.dirname(cache_file), exist_ok=True)
-    
-    with open(cache_file, 'w') as f:
-        f.write(emoji)
-    
-    # Also save to the standard icon path for compatibility
-    with open(ICON_PATH, 'w') as f:
-        f.write(emoji)
-    
+        # Simple moon icon
+        center_x, center_y = 32, 32
+        moon_radius = 18
+        
+        # Draw moon circle
+        dc.ellipse((center_x - moon_radius, center_y - moon_radius, 
+                   center_x + moon_radius, center_y + moon_radius), 
+                   fill="#FFFFFF", outline=outline_color, width=2)
+        
+        # Create crescent effect
+        crescent_offset = 6
+        dc.ellipse((center_x - moon_radius + crescent_offset, center_y - moon_radius, 
+                   center_x + moon_radius + crescent_offset, center_y + moon_radius), 
+                   fill=(0, 0, 0, 0), outline=outline_color, width=2)
+
+    image.save(ICON_PATH)
     return ICON_PATH
 
-def get_current_icon():
+def update_icon(indicator, mode, theme='default', animated=False):
     """
-    Get the current icon from cache file.
+    Update the system tray icon.
     
-    Returns:
-        str: Current emoji icon
+    Args:
+        indicator: GTK AppIndicator object
+        mode (str): "light" or "dark" - determines icon appearance
+        theme (str): Icon theme name (ignored for simple approach)
+        animated (bool): Whether to use animated icon (ignored for simple approach)
     """
-    import os
-    cache_file = os.path.expanduser("~/.cache/switch-icon.txt")
-    
-    if os.path.exists(cache_file):
-        with open(cache_file, 'r') as f:
-            return f.read().strip()
-    else:
-        return "🌞"  # Default to sun
+    try:
+        # Create icon
+        icon_path = create_icon(mode)
+        
+        # Update the system tray icon using GTK's idle_add for thread safety
+        GLib.idle_add(indicator.set_icon, icon_path)
+        
+    except Exception as e:
+        print(f"[Icons] Error updating icon: {e}")
+        # Fallback to minimal icon
+        try:
+            fallback_path = create_icon(mode)
+            GLib.idle_add(indicator.set_icon, fallback_path)
+        except Exception as fallback_error:
+            print(f"[Icons] Fallback icon creation failed: {fallback_error}")
